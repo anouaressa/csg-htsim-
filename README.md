@@ -17,7 +17,7 @@ To get started with running experiments, take a look in the experiments director
 
 # HTSIM Network Simulator - DragonFly and DragonFly Plus
 
-This repository contains implementations of DragonFly and DragonFly Plus topologies for the HTSIM network simulator.
+This repository add implementations DragonFly Plus topologies for the HTSIM network simulator.
 
 ## Building the Project
 
