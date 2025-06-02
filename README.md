@@ -9,3 +9,147 @@ There are some limited instructions in the [wiki](https://github.com/Broadcom/cs
 htsim is written in C++, and has no dependencies.  It should compile and run with g++ or clang on MacOS or Linux.  To compile htsim, cd into the sim directory and run make.
 
 To get started with running experiments, take a look in the experiments directory where there are some examples.  These examples generally require bash, python3 and gnuplot.
+
+
+
+
+# HTSIM Network Simulator - DragonFly and DragonFly Plus
+
+This repository contains implementations of DragonFly and DragonFly Plus topologies for the HTSIM network simulator.
+
+## Building the Project
+
+1. Clone the repository:
+```bash
+git clone https://github.com/anouaressa/csg-htsim-.git
+cd csg-htsim
+```
+
+2. Build the simulator:
+```bash
+cd sim/datacenter
+make
+```
+
+This will build both DragonFly and DragonFly Plus executables.
+
+## Running DragonFly Tests
+
+The DragonFly topology can be tested using TCP or NDP (Network Discovery Protocol):
+
+### TCP Test
+```bash
+./htsim_tcp_dragonfly_permutation -nodes 16 -conns 8 -cwnd 15 COUPLED_EPSILON 1.0
+```
+
+### NDP Test
+```bash
+./htsim_ndp_dragonfly_permutation -nodes 16 -conns 8 -cwnd 15
+```
+
+Parameters:
+- `-nodes`: Number of nodes in the network
+- `-conns`: Number of concurrent connections
+- `-cwnd`: TCP congestion window size
+- `COUPLED_EPSILON`: Congestion control algorithm (for TCP only)
+
+## Running DragonFly Plus Tests
+
+DragonFly Plus includes enhanced routing and additional global links:
+
+```bash
+./htsim_dragonfly_plus -nodes 16 -conns 8 -cwnd 15 COUPLED_EPSILON 1.0
+```
+
+Additional Parameters for DragonFly Plus:
+- The topology automatically configures additional global links (h') based on the number of original global links (h)
+- Adaptive routing is enabled by default
+
+## Topology Parameters
+
+### DragonFly
+- p: Number of hosts per router
+- a: Number of routers per group
+- h: Number of global links per router
+- k: Router radix = p + h + a - 1
+
+### DragonFly Plus
+- p: Number of hosts per router
+- a: Number of routers per group
+- h: Number of global links per router
+- h': Additional global links per router (Plus enhancement)
+- k: Router radix = p + h + h' + a - 1
+
+## Example Configurations
+
+1. Small Test Network:
+```bash
+./htsim_dragonfly_plus -nodes 16 -conns 8 -cwnd 15
+```
+
+2. Medium Network:
+```bash
+./htsim_dragonfly_plus -nodes 64 -conns 32 -cwnd 20
+```
+
+3. Large Network:
+```bash
+./htsim_dragonfly_plus -nodes 256 -conns 128 -cwnd 25
+```
+
+## Output and Analysis
+
+The simulator generates several output files:
+- `logout.dat`: Contains detailed simulation logs
+- Path information is printed to stdout during execution
+- Queue statistics and congestion information
+
+## Key Differences Between DragonFly and DragonFly Plus
+
+1. Network Architecture:
+   - DragonFly Plus adds extra global links (h')
+   - Improved path diversity
+   - Better load balancing
+
+2. Routing:
+   - DragonFly: Basic minimal and non-minimal routing
+   - DragonFly Plus: Adaptive routing with congestion awareness
+
+3. Performance:
+   - DragonFly Plus offers better congestion management
+   - Improved fault tolerance
+   - Enhanced scalability
+
+## Debugging and Monitoring
+
+To enable detailed logging:
+```bash
+export HTSIM_DEBUG=1
+```
+
+To monitor specific aspects:
+1. Queue occupancy:
+```bash
+./htsim_dragonfly_plus -nodes 16 -conns 8 -cwnd 15 -queue_log 1
+```
+
+2. Path selection:
+```bash
+./htsim_dragonfly_plus -nodes 16 -conns 8 -cwnd 15 -path_log 1
+```
+
+## Common Issues and Solutions
+
+1. If you see "No route found":
+   - Check if the number of nodes is compatible with the topology
+   - Verify that p, a, and h parameters are properly balanced
+
+2. For performance issues:
+   - Adjust the congestion window size (cwnd)
+   - Try different numbers of connections
+   - Monitor queue occupancy
+
+## References
+
+- DragonFly topology: Kim et al., ISCA 2008
+- DragonFly Plus enhancements: Based on modern data center requirements 
