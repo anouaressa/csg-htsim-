@@ -51,3 +51,4 @@ obj/
 *.log
 *.dat
 logout.dat
+sim/datacenter/logout.dat
