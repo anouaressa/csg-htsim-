@@ -47,6 +47,7 @@ obj/
 *.idb
 *.pdb
 
-# Log files
+# Log files and data files
 *.log
+*.dat
 logout.dat
