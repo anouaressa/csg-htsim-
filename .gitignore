@@ -1,7 +1,52 @@
+# Object files and build artifacts
+*.o
+*.obj
+*.ko
+*.elf
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
 *.out
+*.app
+htsim_*
+!htsim_*.cpp
+
+# Backup files
 *~
 *.bak
 *.bak2
 *#
-*.o
-.DS_store
+
+# IDE and OS specific files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build directories
+build/
+bin/
+obj/
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Log files
+*.log
+logout.dat
