@@ -33,8 +33,6 @@ cd sim/datacenter
 make
 ```
 
-This will build both DragonFly and DragonFly Plus executables.
-
 ## Running DragonFly Tests
 
 The DragonFly topology can be tested using TCP or NDP (Network Discovery Protocol):
